@@ -3,571 +3,144 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width,initial-scale=1" name="viewport"/>
-  <title>
-   Ajustes de la plataforma · Boost Academy
-  </title>
+  <title>Resumen · Ajustes de la plataforma · Boost Academy</title>
   <style>
-   :root{--violet:#7c3aed;--violet2:#6d28d9;--pink:#fff4fd;--ink:#19151f;--muted:#746d7d;--line:#ece7ef;--white:#fff;}
-*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:linear-gradient(135deg,#fff 0 18%,#fff5fd 18% 100%);}
-.shell{display:grid;grid-template-columns:240px 1fr;min-height:100vh} aside{position:sticky;top:0;height:100vh;background:rgba(255,255,255,.92);border-right:1px solid var(--line);padding:38px 28px;backdrop-filter:blur(10px)}
-.brand{font-weight:850;font-size:21px;color:var(--violet);margin-bottom:38px} .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:#aaa1b0;font-weight:800;margin:22px 0 10px}
-nav a{display:flex;gap:10px;align-items:center;text-decoration:none;color:#81788a;padding:11px 12px;border-radius:12px;margin:3px 0;font-size:14px} nav a.active,nav a:hover{background:#f4edff;color:var(--violet);font-weight:750} .dot{width:8px;height:8px;border-radius:99px;background:currentColor}
-.nav-parent{display:flex;align-items:center;gap:9px;padding:10px 12px 7px;color:#3d3545;font-size:14px;font-weight:850;cursor:pointer;user-select:none;border-radius:10px}.nav-parent:hover{background:#faf7ff}.nav-parent-chevron{margin-left:auto;font-size:12px;color:#8d8295;transition:transform .2s ease}.nav-group.collapsed .nav-parent-chevron{transform:rotate(-90deg)}.nav-parent-dot{width:9px;height:9px;border-radius:50%;background:var(--violet);box-shadow:0 0 0 4px #f1e9ff}.nav-sub{margin-left:13px;padding-left:13px;border-left:1px solid #e9e1ee;max-height:340px;opacity:1;overflow:hidden;transition:max-height .25s ease,opacity .18s ease,margin .25s ease,padding .25s ease}.nav-group.collapsed .nav-sub{max-height:0;opacity:0;margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0}.nav-sub a{justify-content:space-between;padding:9px 10px;margin:2px 0}.nav-sub-label{display:flex;align-items:center;gap:9px}.nav-status{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;font-size:12px;font-weight:900}.nav-status.done{background:#dcfce7;color:#15803d;border:1px solid #86efac}.nav-status.doubt{background:#fef3c7;color:#ca8a04;border:1px solid #fde047}.nav-status.pending{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}.nav-status .mini-spinner{width:10px;height:10px;border:2px solid rgba(185,28,28,.22);border-top-color:#b91c1c;border-radius:50%}
-main{padding:46px 6vw 90px;max-width:1280px} header{margin-bottom:34px} h1{font-size:48px;letter-spacing:-.045em;color:#8048f3;margin:0 0 10px;text-align:center} header p{text-align:center;color:var(--muted);margin:0}
-.section{margin:0 auto 70px;scroll-margin-top:30px} .section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:16px} .kicker{font-size:12px;font-weight:850;color:var(--violet);text-transform:uppercase;letter-spacing:.12em} h2{font-size:24px;margin:5px 0 0;letter-spacing:-.02em} .pill{font-size:12px;padding:7px 10px;border:1px solid #e8dcff;background:#faf7ff;color:var(--violet);border-radius:99px;font-weight:750}
-.card{background:rgba(255,255,255,.86);border:1px solid rgba(225,215,232,.9);box-shadow:0 18px 55px rgba(74,45,85,.08);border-radius:22px;padding:24px;position:relative}
-.card-status-icon{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:900;opacity:0;transform:scale(.65);pointer-events:none;transition:opacity .2s ease,transform .2s ease;z-index:8}
-.status-done-icon{background:#dcfce7;color:#15803d;border:1px solid #86efac;box-shadow:0 5px 16px rgba(21,128,61,.15)}
-.status-doubt-icon{background:#fef3c7;color:#ca8a04;border:1px solid #fde047;box-shadow:0 5px 16px rgba(202,138,4,.15)}
-.status-pending-icon{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;box-shadow:0 5px 16px rgba(185,28,28,.12)}
-.card.is-done .status-done-icon,.card.is-doubt .status-doubt-icon,.card.is-pending .status-pending-icon{opacity:1;transform:scale(1)}
-.loading-spinner{width:16px;height:16px;border:2.5px solid rgba(185,28,28,.22);border-top-color:#b91c1c;border-radius:50%}
-@keyframes statusSpin{to{transform:rotate(360deg)}} .layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;align-items:start}
-.viewport{height:610px;overflow-y:auto;overflow-x:hidden;border-radius:16px;border:1px solid var(--line);background:#fff;position:relative;scrollbar-width:thin;scrollbar-color:#8b7f92 #f4f1f5} .viewport img{width:100%;display:block;height:auto} .still{border-radius:16px;border:1px solid var(--line);overflow:hidden;background:#fff;position:relative} .still img{display:block;width:100%;height:auto}
-.copy{padding:8px 4px} .label{font-size:11px;font-weight:850;letter-spacing:.11em;text-transform:uppercase;color:#aaa1b0;margin-bottom:8px} .copy p{font-size:15px;line-height:1.65;color:#5f5867;margin:0 0 22px} .tip{font-size:12px;color:#948a9b;line-height:1.5;border-top:1px solid var(--line);padding-top:15px}
-.hotspot{width:34px;height:34px;border:0;border-radius:50%;background:var(--violet2);color:#fff;font-weight:850;cursor:pointer;box-shadow:0 7px 20px rgba(109,40,217,.32);display:grid;place-items:center;transition:.18s transform} .hotspot:hover{transform:scale(1.08)} .note-row{display:flex;align-items:center;gap:10px;margin:2px 0 18px} .note-row span{font-size:13px;color:#746d7d;font-weight:700}
-.note-row{position:relative;flex-wrap:wrap}.note-toggle{position:absolute;opacity:0;pointer-events:none}.comment-bubble{display:none;position:relative;width:min(360px,100%);margin:8px 0 0 46px;background:#fff;border:1.5px solid var(--violet2);border-radius:16px;padding:16px 42px 16px 17px;box-shadow:0 12px 30px rgba(109,40,217,.12);z-index:8}.comment-bubble:before{content:'';position:absolute;left:-9px;top:17px;width:16px;height:16px;background:#fff;border-left:1.5px solid var(--violet2);border-bottom:1.5px solid var(--violet2);transform:rotate(45deg)}.note-toggle:checked + .comment-bubble{display:block}.comment-bubble h3{margin:0 0 6px;font-size:14px;color:#29222f}.comment-bubble p{margin:0;color:#665d6e;line-height:1.5;font-size:13px}.close{position:absolute;display:grid;place-items:center;right:10px;top:9px;border:0;background:#f5f1f7;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:15px;color:#5d5365}
-@media(max-width:900px){.shell{grid-template-columns:1fr} aside{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line);padding:20px} nav{display:flex;overflow:auto;gap:6px} .eyebrow{display:none} main{padding:30px 18px 70px} h1{font-size:36px} .layout{grid-template-columns:1fr} .viewport{height:520px}}
-  
-
-/* --- Review controls --- */
-.media-wrap{position:relative;min-width:0}
-.media-wrap .note-row{position:absolute;left:-46px;top:18px;margin:0;z-index:20;display:block}
-.media-wrap .hotspot{animation:hotspotPulse 1.8s ease-in-out infinite;position:relative}
-.media-wrap .hotspot::after{content:'';position:absolute;inset:-7px;border:2px solid rgba(109,40,217,.24);border-radius:50%;animation:hotspotRing 1.8s ease-out infinite}
-@keyframes hotspotPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-@keyframes hotspotRing{0%{transform:scale(.72);opacity:.8}75%,100%{transform:scale(1.28);opacity:0}}
-.media-wrap .comment-bubble{position:absolute;display:none;left:46px;top:-10px;width:330px;margin:0;z-index:30}
-.media-wrap .note-toggle:checked + .comment-bubble{display:block}
-.media-wrap .comment-bubble:before{left:-9px;top:20px}
-.status-block{margin:4px 0 24px}
-.status-title,.comments-title{font-size:11px;font-weight:850;letter-spacing:.11em;text-transform:uppercase;color:#aaa1b0;margin-bottom:9px}
-.status-options{display:flex;gap:7px;flex-wrap:wrap}
-.status-btn{border:1px solid transparent;border-radius:999px;padding:8px 11px;font:inherit;font-size:12px;font-weight:800;cursor:pointer;opacity:.48;transition:.15s ease}
-.status-btn:hover{opacity:.78;transform:translateY(-1px)}
-.status-btn.active{opacity:1;box-shadow:0 0 0 2px #fff,0 0 0 3px currentColor}
-.status-btn.done{background:#dcfce7;color:#15803d}.status-btn.doubt{background:#fef3c7;color:#a16207}.status-btn.pending{background:#fee2e2;color:#b91c1c}
-.comments-panel{border-top:1px solid var(--line);padding-top:18px}
-.comment-form{display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:10px;background:#faf7ff;border:1.5px solid #ddd0ff;border-radius:14px;padding:10px}
-.comment-form input{grid-column:1/-1;background:#fff;border:1px solid #d8c9f7;border-radius:10px;padding:9px 10px;font:inherit;font-size:12px;outline:none}
-.comment-form textarea{min-height:68px;resize:vertical;background:#fff;border:1px solid #d8c9f7;border-radius:10px;padding:9px 10px;font:inherit;font-size:12px;outline:none}
-.comment-form input:focus,.comment-form textarea:focus{border-color:#c4b5fd;box-shadow:0 0 0 3px #f3e8ff}
-.comment-form button{border:0;border-radius:10px;background:var(--violet);color:white;font-weight:800;padding:0 12px;cursor:pointer}
-.comments-list{max-height:190px;overflow-y:auto;padding-right:5px;display:flex;flex-direction:column;gap:8px;scrollbar-width:thin}
-.review-comment{border-radius:11px;padding:10px 11px;font-size:12px;line-height:1.45;color:#4b4452;border:1px solid rgba(0,0,0,.04)}
-.review-comment:nth-child(4n+1){background:#f3e8ff}.review-comment:nth-child(4n+2){background:#ecfeff}.review-comment:nth-child(4n+3){background:#fef9c3}.review-comment:nth-child(4n+4){background:#dcfce7}
-.review-comment strong{display:block;color:#29222f;margin-bottom:3px;font-size:11px}.empty-comments{font-size:12px;color:#aaa1b0;padding:10px 2px}
-@media(max-width:900px){.media-wrap .note-row{left:10px;top:10px}.media-wrap .comment-bubble{left:44px;width:min(310px,calc(100vw - 100px))}}
-  
-/* Corrección de legibilidad en campos de comentarios */
-.comment-name, .comment-text,
-input[type="text"], textarea {
-  color: #18181B !important;
-  -webkit-text-fill-color: #18181B !important;
-  caret-color: #18181B;
-}
-.comment-name::placeholder, .comment-text::placeholder,
-input[type="text"]::placeholder, textarea::placeholder {
-  color: #71717A !important;
-  -webkit-text-fill-color: #71717A !important;
-  opacity: 1;
-}
-
-/* --- Cambio 04 · carrusel de subtareas --- */
-.profile-carousel{position:relative}
-.profile-slide{display:none}
-.profile-slide.active{display:block}
-.profile-slide .still{min-height:390px;display:flex;align-items:center;justify-content:center;background:#fff}
-.profile-slide .still img{width:100%;height:auto;max-height:560px;object-fit:contain}
-.carousel-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px}
-.carousel-arrow{width:38px;height:38px;border-radius:50%;border:1px solid #d8c9f7;background:#fff;color:var(--violet2);font-size:20px;font-weight:900;cursor:pointer;box-shadow:0 5px 14px rgba(109,40,217,.09)}
-.carousel-arrow:hover{background:#f4edff}
-.carousel-count{font-size:12px;font-weight:850;color:#766c80;min-width:54px;text-align:center}
-.profile-slide .copy{padding-top:8px}
-@media(max-width:900px){.profile-slide .still{min-height:260px}}
-  </style>
-  <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js" type="module">
-  </script>
-  <style>
-.resource-block{margin:16px 0 18px;padding:12px 14px;border:1px solid #ddd2f5;border-radius:12px;background:#f7f2ff}
-.resource-label{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#7c3aed;margin-bottom:8px}
-.resource-link{display:inline-flex;align-items:center;gap:7px;color:#6d28d9;font-size:12px;font-weight:800;text-decoration:none;background:#fff;border:1px solid #c4b5fd;border-radius:9px;padding:9px 11px}
-.resource-link:hover{background:#ede9fe}
-
-   .lottie-stage{height:390px;border:1px solid #ece7f2;border-radius:16px;background:linear-gradient(180deg,#faf7ff,#fff);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.lottie-stage dotlottie-wc{width:100%;height:100%;display:block}
-@media(max-width:900px){.lottie-stage{height:320px}}
+   :root{--violet:#7c3aed;--ink:#19151f;--muted:#746d7d;--line:#ece7ef}
+   *{box-sizing:border-box}
+   html{scroll-behavior:smooth}
+   body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:linear-gradient(135deg,#fff 0 18%,#fff5fd 18% 100%)}
+   .shell{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+   aside{position:sticky;top:0;height:100vh;background:rgba(255,255,255,.92);border-right:1px solid var(--line);padding:38px 28px;backdrop-filter:blur(10px)}
+   .brand{font-weight:850;font-size:21px;color:var(--violet);margin-bottom:38px}
+   .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:#aaa1b0;font-weight:800;margin:22px 0 10px}
+   nav a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--violet);background:#f4edff;font-weight:750;padding:11px 12px;border-radius:12px;margin:3px 0;font-size:14px}
+   nav a:hover{background:#ede4ff}
+   main{padding:46px 6vw 90px;max-width:1280px;width:100%}
+   header{margin-bottom:34px}
+   h1{font-size:48px;letter-spacing:-.045em;color:#8048f3;margin:0 0 10px;text-align:center}
+   header p{text-align:center;color:var(--muted);margin:0}
+   .section{margin:0 auto 70px;scroll-margin-top:30px}
+   .section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:16px}
+   .kicker{font-size:12px;font-weight:850;color:var(--violet);text-transform:uppercase;letter-spacing:.12em}
+   h2{font-size:24px;margin:5px 0 0;letter-spacing:-.02em}
+   .pill{font-size:12px;padding:7px 10px;border:1px solid #e8dcff;background:#faf7ff;color:var(--violet);border-radius:99px;font-weight:750}
+   .card{background:rgba(255,255,255,.86);border:1px solid rgba(225,215,232,.9);box-shadow:0 18px 55px rgba(74,45,85,.08);border-radius:22px;position:relative}
+   .summary-table-wrap{overflow-x:auto}
+   .summary-table{width:100%;border-collapse:collapse;text-align:left}
+   .summary-table th,.summary-table td{padding:16px 22px;border-bottom:1px solid var(--line)}
+   .summary-table th{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#aaa1b0;background:#faf7ff}
+   .summary-table tbody tr:last-child td{border-bottom:0}
+   .summary-table tbody tr:hover{background:#fcfaff}
+   .summary-table a{display:block;color:#51465d;text-decoration:none;font-weight:700}
+   .summary-table a:hover{color:var(--violet);text-decoration:underline}
+   .summary-status{display:inline-flex;align-items:center;justify-content:center;min-width:94px;padding:6px 11px;border-radius:999px;font-size:12px;font-weight:800}
+   .summary-status.pending{background:#fee2e2;color:#b91c1c}
+   .summary-status.doubt{background:#fef3c7;color:#a16207}
+   .summary-status.done{background:#dcfce7;color:#15803d}
+   #summary-message{min-height:18px;margin:12px 0 0;text-align:center;font-size:12px;color:var(--muted)}
+   @media(max-width:900px){.shell{grid-template-columns:1fr}aside{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line);padding:20px}main{padding:30px 18px 70px}h1{font-size:36px}}
+   @media(max-width:600px){.summary-table th,.summary-table td{padding:13px 14px}.summary-status{min-width:0}}
   </style>
  </head>
  <body>
   <div class="shell">
    <aside>
-    <div class="brand">
-     Ajustes de la plataforma
-    </div>
-    <div class="eyebrow">
-     Secciones
-    </div>
-    <nav>
-     <div class="nav-group" data-nav-group="onboarding">
-      <div class="nav-parent" role="button" tabindex="0" aria-expanded="true">
-       <span class="nav-parent-dot"></span>
-       <span>Onboarding</span>
-       <span class="nav-parent-chevron" aria-hidden="true">⌄</span>
-      </div>
-      <div class="nav-sub">
-      <a class="active" data-review-link="review-1" href="#onboarding-1">
-       <span class="nav-sub-label">Web</span>
-       <span class="nav-status pending" aria-label="Pendiente"><span class="mini-spinner"></span></span>
-      </a>
-      <a data-review-link="review-2" href="#onboarding-2">
-       <span class="nav-sub-label">Quiz</span>
-       <span class="nav-status pending" aria-label="Pendiente"><span class="mini-spinner"></span></span>
-      </a>
-      <a data-review-link="review-3" href="#onboarding-3">
-       <span class="nav-sub-label">Octi</span>
-       <span class="nav-status pending" aria-label="Pendiente"><span class="mini-spinner"></span></span>
-      </a>
-      </div>
-     </div>
+    <div class="brand">Ajustes de la plataforma</div>
+    <div class="eyebrow">Secciones</div>
+    <nav aria-label="Secciones principales">
+     <a href="index.html" aria-current="page">Resumen</a>
+     <a href="onboarding.html">Onboarding</a>
     </nav>
    </aside>
    <main>
     <header>
-     <h1>
-      Ajustes de la plataforma
-     </h1>
-     <p>
-      Revisión de producto · Boost Academy
-     </p>
+     <h1>Ajustes de la plataforma</h1>
+     <p>Revisión de producto · Boost Academy</p>
+     <p id="summary-message" role="status" aria-live="polite">Conectando con el servicio de estados…</p>
     </header>
-    <section class="section" id="onboarding-1">
+    <section class="section" id="resumen">
      <div class="section-head">
       <div>
-       <div class="kicker">
-        Onboarding · 01
-       </div>
-       <h2>
-        Rediseño de la página web
-       </h2>
+       <div class="kicker">Vista general</div>
+       <h2>Resumen de tareas</h2>
       </div>
-      <div class="pill">
-       Imagen con scroll
-      </div>
+      <div class="pill">Todas las secciones</div>
      </div>
      <div class="card">
-      <div aria-label="Hecho" class="card-status-icon status-done-icon" title="Hecho">
-       ✓
-      </div>
-      <div aria-label="Con dudas" class="card-status-icon status-doubt-icon" title="Con dudas">
-       ⚠
-      </div>
-      <div aria-label="Pendiente" class="card-status-icon status-pending-icon" title="Pendiente">
-       <span aria-hidden="true" class="loading-spinner">
-       </span>
-      </div>
-      <div class="layout">
-       <div class="media-wrap">
-        <div class="viewport" title="Desplázate dentro de la imagen">
-         <img alt="Propuesta de landing page de Boost Academy" src="./assets/images/onboarding-web.png"/>
-        </div>
-        <div class="note-row">
-         <label aria-label="Abrir nota 1" class="hotspot" for="toggle-n1" role="button" tabindex="0">
-          1
-         </label>
-         <input class="note-toggle" id="toggle-n1" type="checkbox"/>
-         <div class="comment-bubble">
-          <label aria-label="Cerrar" class="close" for="toggle-n1" role="button">
-           ×
-          </label>
-          <h3>
-           Nota · Página principal
-          </h3>
-          <p>
-           Podemos reorganizar la página principal para brindar más información sobre la plataforma; el diseño tiene partes inspiradas en Duolingo y en la versión que trabajó Justino.
-          </p>
-         </div>
-        </div>
-       </div>
-       <div class="copy">
-        <div class="label">
-         Propuesta
-        </div>
-        <p>
-         Rediseño para la página web, dar más información de la plataforma y que interactúen con la misma haciendo el quiz antes de registrarse.
-        </p>
-        <div class="status-block" data-review-id="review-1">
-         <div class="status-title">
-          Status
-         </div>
-         <div class="status-options">
-          <button class="status-btn done" data-status="done" type="button">
-           Hecho
-          </button>
-          <button class="status-btn doubt" data-status="doubt" type="button">
-           Con dudas
-          </button>
-          <button class="status-btn pending active" data-status="pending" type="button">
-           Pendiente
-          </button>
-         </div>
-        </div>
-        <div class="comments-panel" data-comments-id="review-1">
-         <div class="comments-title">
-          Comentarios
-         </div>
-         <div class="comment-form">
-          <input class="comment-name" placeholder="Tu nombre" type="text"/>
-          <textarea class="comment-text" placeholder="Escribe un comentario..."></textarea>
-          <button class="add-comment" type="button">
-           Comentar
-          </button>
-         </div>
-         <div class="comments-list">
-          <div class="empty-comments">
-           Aún no hay comentarios.
-          </div>
-         </div>
-        </div>
-       </div>
+      <div class="summary-table-wrap">
+       <table class="summary-table">
+        <thead><tr><th scope="col">Tarea</th><th scope="col">Estado</th></tr></thead>
+        <tbody>
+         <tr hidden><td><a href="onboarding.html#onboarding-1">Rediseño de la página web</a></td><td><span class="summary-status pending" data-summary-review="review-1">Pendiente</span></td></tr>
+         <tr hidden><td><a href="onboarding.html#onboarding-2">Quiz de evaluación</a></td><td><span class="summary-status pending" data-summary-review="review-2">Pendiente</span></td></tr>
+         <tr><td><a href="onboarding.html#onboarding-3">Actualizar animación de Octi</a></td><td><span class="summary-status pending" data-summary-review="review-3">Pendiente</span></td></tr>
+         <tr><td><a href="onboarding.html#numeral-1">Reducir nichos</a></td><td><span class="summary-status pending" data-summary-review="review-num-1">Pendiente</span></td></tr>
+         <tr><td><a href="onboarding.html#completa-tu-perfil">Completa tu perfil</a></td><td><span class="summary-status pending" data-summary-group="ctp">Pendiente</span></td></tr>
+         <tr><td><a href="onboarding.html#numeral-8">Recorrido por la plataforma</a></td><td><span class="summary-status pending" data-summary-review="review-num-8">Pendiente</span></td></tr>
+         <tr><td><a href="onboarding.html#racha">Racha</a></td><td><span class="summary-status pending" data-summary-group="racha">Pendiente</span></td></tr>
+         <tr><td><a href="onboarding.html#numeral-11">Ranking de estudiantes</a></td><td><span class="summary-status pending" data-summary-review="review-num-11">Pendiente</span></td></tr>
+        </tbody>
+       </table>
       </div>
      </div>
     </section>
-    <section class="section" id="onboarding-2">
-     <div class="section-head">
-      <div>
-       <div class="kicker">
-        Onboarding · 02
-       </div>
-       <h2>
-        Quiz de evaluación
-       </h2>
-      </div>
-      <div class="pill">
-       Cambio
-      </div>
-     </div>
-     <div class="card">
-      <div aria-label="Hecho" class="card-status-icon status-done-icon" title="Hecho">
-       ✓
-      </div>
-      <div aria-label="Con dudas" class="card-status-icon status-doubt-icon" title="Con dudas">
-       ⚠
-      </div>
-      <div aria-label="Pendiente" class="card-status-icon status-pending-icon" title="Pendiente">
-       <span aria-hidden="true" class="loading-spinner">
-       </span>
-      </div>
-      <div class="layout">
-       <div class="media-wrap">
-        <div class="still">
-         <img alt="Pantalla del quiz de evaluación" src="./assets/images/onboarding-quiz.png"/>
-        </div>
-        <div class="note-row">
-         <label aria-label="Abrir nota 2" class="hotspot" for="toggle-n2" role="button" tabindex="0">
-          2
-         </label>
-         <input class="note-toggle" id="toggle-n2" type="checkbox"/>
-         <div class="comment-bubble">
-          <label aria-label="Cerrar" class="close" for="toggle-n2" role="button">
-           ×
-          </label>
-          <h3>
-           Nota · Quiz
-          </h3>
-          <p>
-           Está pendiente revisar las preguntas y organizar correctamente los niveles.
-          </p>
-         </div>
-        </div>
-       </div>
-       <div class="copy">
-        <div class="label">
-         Cambio
-        </div>
-        <p>
-         Integrar quiz de evaluación para los alumnos y ubicarlos por niveles.
-        </p>
-        <div class="status-block" data-review-id="review-2">
-         <div class="status-title">
-          Status
-         </div>
-         <div class="status-options">
-          <button class="status-btn done" data-status="done" type="button">
-           Hecho
-          </button>
-          <button class="status-btn doubt" data-status="doubt" type="button">
-           Con dudas
-          </button>
-          <button class="status-btn pending active" data-status="pending" type="button">
-           Pendiente
-          </button>
-         </div>
-        </div>
-        <div class="comments-panel" data-comments-id="review-2">
-         <div class="comments-title">
-          Comentarios
-         </div>
-         <div class="comment-form">
-          <input class="comment-name" placeholder="Tu nombre" type="text"/>
-          <textarea class="comment-text" placeholder="Escribe un comentario..."></textarea>
-          <button class="add-comment" type="button">
-           Comentar
-          </button>
-         </div>
-         <div class="comments-list">
-          <div class="empty-comments">
-           Aún no hay comentarios.
-          </div>
-         </div>
-        </div>
-       </div>
-      </div>
-     </div>
-    </section>
-    <section class="section" id="onboarding-3">
-     <div class="section-head">
-      <div>
-       <div class="kicker">
-        Onboarding · 03
-       </div>
-       <h2>
-        Actualizar animación de Octi
-       </h2>
-      </div>
-      <div class="pill">
-       Animación .lottie
-      </div>
-     </div>
-     <div class="card">
-      <div aria-label="Hecho" class="card-status-icon status-done-icon" title="Hecho">
-       ✓
-      </div>
-      <div aria-label="Con dudas" class="card-status-icon status-doubt-icon" title="Con dudas">
-       ⚠
-      </div>
-      <div aria-label="Pendiente" class="card-status-icon status-pending-icon" title="Pendiente">
-       <span aria-hidden="true" class="loading-spinner">
-       </span>
-      </div>
-      <div class="layout">
-       <div class="media-wrap">
-        <div class="lottie-stage">
-         <dotlottie-wc autoplay="" loop="" src="data:application/zip;base64,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">
-         </dotlottie-wc>
-        </div>
-        <div class="note-row">
-         <label aria-label="Abrir nota 3" class="hotspot" for="toggle-n3" role="button" tabindex="0">
-          3
-         </label>
-         <input class="note-toggle" id="toggle-n3" type="checkbox"/>
-         <div class="comment-bubble">
-          <label aria-label="Cerrar" class="close" for="toggle-n3" role="button">
-           ×
-          </label>
-          <h3>
-           Nota · Animación de Octi
-          </h3>
-          <p>
-           Esta animación está en formato .lottie, revisar si es un buen formato para integrarlo a la app o explorar otras opciones para poder continuar realizando más animaciones simples.
-          </p>
-         </div>
-        </div>
-       </div>
-       <div class="copy">
-        <div class="label">
-         Cambio
-        </div>
-        <p>
-         Actualizar animación de Octi.
-        </p>
-        <div class="resource-block">
-         <div class="resource-label">
-          Recurso
-         </div>
-         <a class="resource-link" href="https://drive.google.com/file/d/1hU8Oixm6opDid3aDMyjx0ksDaywtH6vb/view?usp=drive_link" target="_blank" rel="noopener noreferrer">
-          Descargar animación ↗
-         </a>
-        </div>
-        <div class="status-block" data-review-id="review-3">
-         <div class="status-title">
-          Status
-         </div>
-         <div class="status-options">
-          <button class="status-btn done" data-status="done" type="button">
-           Hecho
-          </button>
-          <button class="status-btn doubt" data-status="doubt" type="button">
-           Con dudas
-          </button>
-          <button class="status-btn pending active" data-status="pending" type="button">
-           Pendiente
-          </button>
-         </div>
-        </div>
-        <div class="comments-panel" data-comments-id="review-3">
-         <div class="comments-title">
-          Comentarios
-         </div>
-         <div class="comment-form">
-          <input class="comment-name" placeholder="Tu nombre" type="text"/>
-          <textarea class="comment-text" placeholder="Escribe un comentario..."></textarea>
-          <button class="add-comment" type="button">
-           Comentar
-          </button>
-         </div>
-         <div class="comments-list">
-          <div class="empty-comments">
-           Aún no hay comentarios.
-          </div>
-         </div>
-        </div>
-       </div>
-      </div>
-     </div>
-    </section>
-
-    
    </main>
   </div>
-  <script>
-   // Mantiene la primera imagen con scroll exactamente a la altura del texto lateral.
-const firstSection=document.querySelector('#onboarding-1');
-const firstViewport=firstSection?.querySelector('.viewport');
-const firstCopy=firstSection?.querySelector('.copy');
-function syncFirstViewportHeight(){
-  if(firstViewport && firstCopy && window.innerWidth>900){
-    firstViewport.style.height=`${Math.ceil(firstCopy.getBoundingClientRect().height)}px`;
-  }else if(firstViewport){
-    firstViewport.style.height='';
-  }
-}
-if(firstCopy){ new ResizeObserver(syncFirstViewportHeight).observe(firstCopy); }
-window.addEventListener('resize',syncFirstViewportHeight);
-syncFirstViewportHeight();
-
-// Permite expandir y contraer grupos principales de la navegación lateral.
-document.querySelectorAll('.nav-group').forEach(group=>{
-  const parent=group.querySelector('.nav-parent');
-  if(!parent) return;
-  const toggle=()=>{
-    const collapsed=group.classList.toggle('collapsed');
-    parent.setAttribute('aria-expanded', String(!collapsed));
-  };
-  parent.addEventListener('click',toggle);
-  parent.addEventListener('keydown',e=>{
-    if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}
-  });
-});
-
-const links=[...document.querySelectorAll('nav a')]; const secs=[...document.querySelectorAll('.section')]; const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.remove('active'));const a=document.querySelector(`nav a[href="#${e.target.id}"]`);if(a)a.classList.add('active')}}),{threshold:.35}); secs.forEach(s=>io.observe(s));
-  </script>
   <script type="module">
    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-const SUPABASE_URL = 'https://wioevaayiqpcwiwcjaxg.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_n0PiRCa3pFqupaH3C9mnEQ_PzNVVKrQ';
-const message=document.createElement('p');
-message.id='review-sync-message';
-message.setAttribute('role','status');
-document.querySelector('header').append(message);
-const statusBlocks=[...document.querySelectorAll('.status-block')];
-const commentsPanels=[...document.querySelectorAll('.comments-panel')];
-const statusByReview=new Map(statusBlocks.map(block=>[block.dataset.reviewId,'pending']));
-let realtimeChannel=null;
+   const SUPABASE_URL='https://wioevaayiqpcwiwcjaxg.supabase.co';
+   const SUPABASE_ANON_KEY='sb_publishable_n0PiRCa3pFqupaH3C9mnEQ_PzNVVKrQ';
+   const supabase=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+   const message=document.querySelector('#summary-message');
+   const singleTaskIds=['review-1','review-2','review-3','review-num-1','review-num-8','review-num-11'];
+   const groupedTaskIds={
+    ctp:['review-ctp-1','review-ctp-2','review-ctp-3','review-ctp-4','review-ctp-5','review-ctp-6'],
+    racha:['review-racha-1','review-racha-2']
+   };
+   const statusByReview=new Map([...singleTaskIds,...Object.values(groupedTaskIds).flat()].map(id=>[id,'pending']));
 
-const style=document.createElement('style');
-style.textContent='#review-sync-message{min-height:18px;margin:12px 0 0;text-align:center;font-size:12px;color:#746d7d}';
-document.head.append(style);
+   function displayStatus(status){
+    return status==='done'?'Hecho':status==='doubt'?'Con dudas':'Pendiente';
+   }
 
-function setMessage(text){message.textContent=text;}
-function applyStatus(id,status){
-  statusByReview.set(id,status);
-  const block=statusBlocks.find(item=>item.dataset.reviewId===id);
-  if(!block)return;
-  block.querySelectorAll('.status-btn').forEach(button=>button.classList.toggle('active',button.dataset.status===status));
-  const card=block.closest('.card');
-  if(card){card.classList.toggle('is-done',status==='done');card.classList.toggle('is-doubt',status==='doubt');card.classList.toggle('is-pending',status==='pending');}
-  const navStatus=document.querySelector(`[data-review-link="${id}"] .nav-status`);
-  if(navStatus){
-    navStatus.className='nav-status '+status;
-    navStatus.setAttribute('aria-label',status==='done'?'Hecho':status==='doubt'?'Con dudas':'Pendiente');
-    navStatus.innerHTML=status==='done'?'✓':status==='doubt'?'⚠':'<span class="mini-spinner"></span>';
-  }
-}
+   function updateSummary(){
+    document.querySelectorAll('[data-summary-review]').forEach(badge=>{
+     const status=statusByReview.get(badge.dataset.summaryReview)||'pending';
+     badge.className=`summary-status ${status}`;
+     badge.textContent=displayStatus(status);
+    });
+    document.querySelectorAll('[data-summary-group]').forEach(badge=>{
+     const statuses=groupedTaskIds[badge.dataset.summaryGroup].map(id=>statusByReview.get(id)||'pending');
+     const status=statuses.every(value=>value==='done')?'done':statuses.includes('doubt')?'doubt':'pending';
+     badge.className=`summary-status ${status}`;
+     badge.textContent=displayStatus(status);
+    });
+   }
 
-function renderComments(panel,items){
-  const list=panel.querySelector('.comments-list');
-  list.replaceChildren();
-  if(!items.length){list.innerHTML='<div class="empty-comments">Aún no hay comentarios.</div>';return;}
-  items.forEach(item=>{
-    const element=document.createElement('div');element.className='review-comment';
-    const author=document.createElement('strong');author.textContent=item.author_name;
-    const body=document.createElement('div');body.textContent=item.body;
-    element.append(author,body);list.append(element);
-  });
-}
+   async function loadStatuses(){
+    const {data,error}=await supabase.from('review_statuses').select('review_id,status');
+    if(error)throw error;
+    data.forEach(row=>{
+     if(statusByReview.has(row.review_id))statusByReview.set(row.review_id,row.status);
+    });
+    updateSummary();
+    message.textContent='Conectado. Los estados se actualizan automáticamente.';
+   }
 
-async function loadReviews(){
-  const [{data:statuses,error:statusError},{data:comments,error:commentsError}]=await Promise.all([
-    supabase.from('review_statuses').select('review_id,status'),
-    supabase.from('review_comments').select('id,review_id,author_name,body,created_at').order('created_at',{ascending:true})
-  ]);
-  if(statusError)throw statusError;
-  if(commentsError)throw commentsError;
-  statuses.forEach(item=>applyStatus(item.review_id,item.status));
-  commentsPanels.forEach(panel=>renderComments(panel,comments.filter(item=>item.review_id===panel.dataset.commentsId)));
-  updateProfileAggregate();
-}
-
-function watchChanges(){
-  if(realtimeChannel)return;
-  realtimeChannel=supabase.channel('review-updates')
-    .on('postgres_changes',{event:'*',schema:'public',table:'review_statuses'},payload=>{
+   try{
+    await loadStatuses();
+    supabase.channel('summary-review-updates')
+     .on('postgres_changes',{event:'*',schema:'public',table:'review_statuses'},payload=>{
       const row=payload.new;
-      if(row?.review_id&&row?.status)applyStatus(row.review_id,row.status);
-      updateProfileAggregate();
-    })
-    .on('postgres_changes',{event:'*',schema:'public',table:'review_comments'},async payload=>{
-      const reviewId=payload.new?.review_id||payload.old?.review_id;
-      const panel=commentsPanels.find(item=>item.dataset.commentsId===reviewId);
-      if(!panel)return;
-      const {data,error}=await supabase.from('review_comments').select('id,review_id,author_name,body,created_at').eq('review_id',reviewId).order('created_at',{ascending:true});
-      if(!error)renderComments(panel,data);
-    }).subscribe();
-}
-
-function bindReviewEvents(){
-  statusBlocks.forEach(block=>block.querySelectorAll('.status-btn').forEach(button=>button.addEventListener('click',async()=>{
-    const id=block.dataset.reviewId;
-    const previous=statusByReview.get(id)||'pending';
-    const status=button.dataset.status;
-    applyStatus(id,status);updateProfileAggregate();
-    const {error}=await supabase.from('review_statuses').upsert({review_id:id,status},{onConflict:'review_id'});
-    if(error){applyStatus(id,previous);updateProfileAggregate();setMessage('No se pudo guardar el estado: '+error.message);}
-  })));
-  commentsPanels.forEach(panel=>panel.querySelector('.add-comment').addEventListener('click',async()=>{
-    const authorName=panel.querySelector('.comment-name');
-    const text=panel.querySelector('.comment-text');
-    const name=authorName.value.trim();
-    const body=text.value.trim();
-    if(!name||!body){if(!name)authorName.focus();else text.focus();return;}
-    const button=panel.querySelector('.add-comment');button.disabled=true;
-    const {error}=await supabase.from('review_comments').insert({review_id:panel.dataset.commentsId,author_name:name,body});
-    button.disabled=false;
-    if(error){setMessage('No se pudo guardar el comentario: '+error.message);return;}
-    text.value='';setMessage('Comentario guardado.');
-  }));
-}
-
-const supabase=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-bindReviewEvents();
-loadReviews().then(()=>{
-  setMessage('Conectado. Los cambios son visibles para cualquier persona con acceso a esta página.');
-  watchChanges();
-}).catch(error=>setMessage('Error al cargar Supabase: '+error.message));
+      if(row?.review_id&&statusByReview.has(row.review_id)){
+       statusByReview.set(row.review_id,row.status);
+       updateSummary();
+      }
+     }).subscribe();
+   }catch(error){
+    message.textContent=`Error al cargar los estados: ${error.message}`;
+   }
   </script>
-
-
  </body>
 </html>
