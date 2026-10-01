@@ -656,27 +656,19 @@ const links=[...document.querySelectorAll('nav a')]; const secs=[...document.que
   <script type="module">
    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-const SUPABASE_URL = 'https://YOUR_PROJECT_ID.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY';
-const authPanel=document.createElement('section');
-authPanel.id='review-auth';
-authPanel.innerHTML='<form><label for="review-email">Acceso por correo</label><input id="review-email" type="email" autocomplete="email" placeholder="nombre@ejemplo.com" required><button type="submit">Enviar enlace de acceso</button><button id="review-signout" type="button" hidden>Cerrar sesión</button><span id="review-auth-message" role="status"></span></form>';
-document.querySelector('header').append(authPanel);
-
-const message=authPanel.querySelector('#review-auth-message');
-const emailInput=authPanel.querySelector('#review-email');
-const signInButton=authPanel.querySelector('button[type="submit"]');
-const signOutButton=authPanel.querySelector('#review-signout');
+const SUPABASE_URL = 'https://wioevaayiqpcwiwcjaxg.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_n0PiRCa3pFqupaH3C9mnEQ_PzNVVKrQ';
+const message=document.createElement('p');
+message.id='review-sync-message';
+message.setAttribute('role','status');
+document.querySelector('header').append(message);
 const statusBlocks=[...document.querySelectorAll('.status-block')];
 const commentsPanels=[...document.querySelectorAll('.comments-panel')];
 const statusByReview=new Map(statusBlocks.map(block=>[block.dataset.reviewId,'pending']));
-let supabase=null;
-let activeUser=null;
-let sessionUserId=null;
 let realtimeChannel=null;
 
 const style=document.createElement('style');
-style.textContent='#review-auth{margin:18px auto 0;max-width:620px}#review-auth form{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}#review-auth label{font-size:12px;font-weight:700;color:#746d7d}#review-auth input{min-width:220px;padding:9px 11px;border:1px solid #d8c9f7;border-radius:9px;font:inherit;font-size:13px}#review-auth button{padding:9px 12px;border:0;border-radius:9px;background:#7c3aed;color:#fff;font-weight:750;cursor:pointer}#review-auth button[hidden]{display:none}#review-auth button:disabled{opacity:.55;cursor:wait}#review-auth span{flex-basis:100%;min-height:18px;text-align:center;font-size:12px;color:#746d7d}';
+style.textContent='#review-sync-message{min-height:18px;margin:12px 0 0;text-align:center;font-size:12px;color:#746d7d}';
 document.head.append(style);
 
 function setMessage(text){message.textContent=text;}
@@ -704,12 +696,6 @@ function updateProfileAggregate(){
   if(carousel){carousel.classList.toggle('is-done',done);carousel.classList.toggle('is-pending',!done);carousel.classList.remove('is-doubt');}
 }
 
-function clearReviews(){
-  statusBlocks.forEach(block=>applyStatus(block.dataset.reviewId,'pending'));
-  commentsPanels.forEach(panel=>renderComments(panel,[]));
-  updateProfileAggregate();
-}
-
 function renderComments(panel,items){
   const list=panel.querySelector('.comments-list');
   list.replaceChildren();
@@ -720,10 +706,6 @@ function renderComments(panel,items){
     const body=document.createElement('div');body.textContent=item.body;
     element.append(author,body);list.append(element);
   });
-}
-
-function setReviewControlsEnabled(enabled){
-  document.querySelectorAll('.status-btn,.comment-name,.comment-text,.add-comment').forEach(control=>{control.disabled=!enabled;});
 }
 
 async function loadReviews(){
@@ -761,7 +743,7 @@ function bindReviewEvents(){
     const previous=statusByReview.get(id)||'pending';
     const status=button.dataset.status;
     applyStatus(id,status);updateProfileAggregate();
-    const {error}=await supabase.from('review_statuses').upsert({review_id:id,status,updated_by:activeUser.id},{onConflict:'review_id'});
+    const {error}=await supabase.from('review_statuses').upsert({review_id:id,status},{onConflict:'review_id'});
     if(error){applyStatus(id,previous);updateProfileAggregate();setMessage('No se pudo guardar el estado: '+error.message);}
   })));
   commentsPanels.forEach(panel=>panel.querySelector('.add-comment').addEventListener('click',async()=>{
@@ -771,47 +753,19 @@ function bindReviewEvents(){
     const body=text.value.trim();
     if(!name||!body){if(!name)authorName.focus();else text.focus();return;}
     const button=panel.querySelector('.add-comment');button.disabled=true;
-    const {error}=await supabase.from('review_comments').insert({review_id:panel.dataset.commentsId,author_name:name,body,user_id:activeUser.id});
+    const {error}=await supabase.from('review_comments').insert({review_id:panel.dataset.commentsId,author_name:name,body});
     button.disabled=false;
     if(error){setMessage('No se pudo guardar el comentario: '+error.message);return;}
     text.value='';setMessage('Comentario guardado.');
   }));
 }
 
-async function setSession(session){
-  activeUser=session?.user||null;
-  const authenticated=Boolean(activeUser);
-  emailInput.hidden=authenticated;signInButton.hidden=authenticated;signOutButton.hidden=!authenticated;
-  setReviewControlsEnabled(authenticated);
-  if(!authenticated){
-    sessionUserId=null;
-    if(realtimeChannel){await supabase.removeChannel(realtimeChannel);realtimeChannel=null;}
-    clearReviews();setMessage('Inicia sesión para consultar y editar la revisión.');return;
-  }
-  if(sessionUserId===activeUser.id)return;
-  sessionUserId=activeUser.id;
-  setMessage('Sesión iniciada: '+activeUser.email);
-  try{await loadReviews();}catch(error){sessionUserId=null;setMessage('Error al cargar Supabase: '+error.message);return;}
+const supabase=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+bindReviewEvents();
+loadReviews().then(()=>{
+  setMessage('Conectado. Los cambios son visibles para cualquier persona con acceso a esta página.');
   watchChanges();
-}
-
-document.querySelectorAll('.status-btn,.comment-name,.comment-text,.add-comment').forEach(control=>{control.disabled=true;});
-if(SUPABASE_URL.includes('YOUR_PROJECT_ID')||SUPABASE_ANON_KEY.includes('YOUR_SUPABASE')){
-  emailInput.disabled=true;signInButton.disabled=true;
-  setMessage('Configura SUPABASE_URL y SUPABASE_ANON_KEY en este archivo.');
-}else{
-  supabase=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-  bindReviewEvents();
-  authPanel.querySelector('form').addEventListener('submit',async event=>{
-    event.preventDefault();signInButton.disabled=true;setMessage('Enviando enlace de acceso...');
-    const {error}=await supabase.auth.signInWithOtp({email:emailInput.value.trim(),options:{emailRedirectTo:window.location.origin+window.location.pathname}});
-    signInButton.disabled=false;
-    setMessage(error?'No se pudo enviar el enlace: '+error.message:'Revisa tu correo para abrir el enlace de acceso.');
-  });
-  signOutButton.addEventListener('click',async()=>{const {error}=await supabase.auth.signOut();if(error)setMessage(error.message);});
-  supabase.auth.onAuthStateChange((_event,session)=>{setSession(session);});
-  supabase.auth.getSession().then(({data:{session}})=>setSession(session));
-}
+}).catch(error=>setMessage('Error al cargar Supabase: '+error.message));
   </script>
 
   <script>
